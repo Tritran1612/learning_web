@@ -11,8 +11,8 @@ const hostname = process.env.HOST_NAME || 'localhost';
 app.set('views', path.join(__dirname,'views')); // Thư mục views
 app.set('view engine', 'ejs') // Sử dụng EJS làm view engine
 
-
-//khai báo route
+//config static files
+app.use(express.static(path.join(__dirname, '../public')));//khai báo route
 app.get('/', (req, res) => {
   res.render('sample.ejs') // Render file sample.ejs
 })
