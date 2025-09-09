@@ -21,16 +21,7 @@ configViewEngine(app);
 //config web routes
 app.use('/', webRoutes);
 
-// simple query
-
-connection.query(
-  'select * from Users u',
-  function(err, results, fields) {
-
-    console.log('Query results:', results);
-    // console.log('Fields results:', fields);
-  }
-)
+// Connection will be made when needed
 
 app.listen(port, hostname, () => {
   console.log(`Example app listening on http://${hostname}:${port}`)

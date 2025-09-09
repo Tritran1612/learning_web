@@ -1,4 +1,4 @@
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 
 //test connection database
 // const connection = mysql.createConnection({
@@ -16,9 +16,11 @@ const connection = mysql.createPool({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     port: process.env.DB_PORT,
-    waitForConnections:true,
-    connectionLimit: 10,
-    queueLimit:0
+    waitForConnections: true,
+    connectionLimit: 5,  // Reduced for better performance
+    queueLimit: 0,
+    enableKeepAlive: true,
+    keepAliveInitialDelay: 0
 
 })
 
