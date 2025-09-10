@@ -37,8 +37,34 @@ const getCreatePage = (req, res) => {
     res.render('create.ejs');
 };
 
-const getUpdatePage = (req, res) => {
-    res.render('edit.ejs');
+const getUpdatePage = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const [users] = await connection.query('SELECT * FROM Users WHERE id = ?', [id]);
+        
+        if (users.length === 0) {
+            return res.send('User not found');
+        }
+        
+        return res.render('edit.ejs', { user: users[0] });
+    } catch (error) {
+        console.error('Error getting user:', error);
+        return res.status(500).send('Error getting user');
+    }
+};
+
+const postUpdateUser = async (req, res) => {
+    try {
+        const { id, email, name, city } = req.body;
+        await connection.query(
+            'UPDATE Users SET email = ?, name = ?, city = ? WHERE id = ?',
+            [email, name, city, id]
+        );
+        return res.redirect('/');
+    } catch (error) {
+        console.error('Error updating user:', error);
+        return res.status(500).send('Error updating user');
+    }
 };
 
 module.exports = {
@@ -46,5 +72,6 @@ module.exports = {
     getAboutPage,
     postCreateUser,
     getCreatePage,
-    getUpdatePage
+    getUpdatePage,
+    postUpdateUser
 };
