@@ -1,5 +1,5 @@
 const connection = require('../config/db');
-const CRUDService = require('../service/CRUDService');
+const { getAllUsers , getUserById } = require('../service/CRUDService');
 
 const getHomepage = async (req, res) => {
     try {
@@ -38,19 +38,13 @@ const getCreatePage = (req, res) => {
 };
 
 const getUpdatePage = async (req, res) => {
-    try {
         const id = req.params.id;
-        const [users] = await connection.query('SELECT * FROM Users WHERE id = ?', [id]);
-        
-        if (users.length === 0) {
-            return res.send('User not found');
+        let users = await getUserById(id);
+        if (!users) {
+            return res.status(404).send('User not found');
         }
-        
         return res.render('edit.ejs', { user: users[0] });
-    } catch (error) {
-        console.error('Error getting user:', error);
-        return res.status(500).send('Error getting user');
-    }
+
 };
 
 const postUpdateUser = async (req, res) => {
