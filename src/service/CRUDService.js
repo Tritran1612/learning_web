@@ -11,12 +11,17 @@ const getAllUsers = async () => {
 }
 
 const getUserById = async (id) => {
-    const [users] = await connection.query('SELECT * FROM Users WHERE id = ?', [id]);
-    let user = users && users.length > 0 ? users[0] : {};
-    return user;
+    try {
+        const [users] = await connection.query('SELECT * FROM Users WHERE id = ?', [id]);
+        return users;
+    } catch (error) {
+        console.error('Error getting user:', error);
+        throw error;
+    }
 };
 
 module.exports = {
     getAllUsers,
+    getUserById,
     getUserById
 }

@@ -3,7 +3,7 @@ const { getAllUsers , getUserById } = require('../service/CRUDService');
 
 const getHomepage = async (req, res) => {
     try {
-        const results = await CRUDService.getAllUsers();
+        const results = await getAllUsers();
         return res.render('home.ejs', { users: results });
     } catch (error) {
         console.error('Error in homepage:', error);
@@ -43,7 +43,7 @@ const getUpdatePage = async (req, res) => {
         if (!users) {
             return res.status(404).send('User not found');
         }
-        return res.render('edit.ejs', { user: users[0] });
+        return res.render('edit.ejs', { userEdit: users[0] });
 
 };
 
