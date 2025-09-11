@@ -20,8 +20,33 @@ const getUserById = async (id) => {
     }
 };
 
+const updateUserById = async (id, email, name, city) => {
+    try {
+        await connection.query(
+            'UPDATE Users SET email = ?, name = ?, city = ? WHERE id = ?',
+            [email, name, city, id]
+        );
+    } catch (error) {
+        console.error('Error updating user:', error);
+        throw error;
+    }
+};
+
+const createNewUser = async (email, name, city) => {
+    try {
+        await connection.query(
+            'INSERT INTO Users (email, name, city) VALUES (?, ?, ?)',
+            [email, name, city]
+        );
+    } catch (error) {
+        console.error('Error creating user:', error);
+        throw error;
+    }
+};
+
 module.exports = {
     getAllUsers,
     getUserById,
-    getUserById
+    updateUserById,
+    createNewUser
 }
