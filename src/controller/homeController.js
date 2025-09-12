@@ -1,6 +1,6 @@
 const connection = require('../config/db');
 // Import the new createNewUser function
-const { getAllUsers, getUserById, createNewUser, updateUserById } = require('../service/CRUDService');
+const { getAllUsers, getUserById, createNewUser, updateUserById, deleteUserById } = require('../service/CRUDService');
 
 const getHomepage = async (req, res) => {
     try {
@@ -77,11 +77,32 @@ const postUpdateUser = async (req, res) => {
     }
 };
 
+const postDeleteUser = async (req, res) => {
+
+    const id = req.params.id;
+    let user = await getUserById(id); // getUserById returns an array
+        
+    if (!user || user.length === 0) {
+        return res.status(404).send('User not found');
+    }
+    res.render('delete.ejs', { userEdit: user[0] });
+};
+
+const postHandleRemoveUser = async (req, res) => {
+    const id = req.body.id;
+
+    await deleteUserById(id);
+    res.redirect('/');
+};
+
+
 module.exports = {
     getHomepage,
     getAboutPage,
     postCreateUser,
     getCreatePage,
     getUpdatePage,
-    postUpdateUser
+    postUpdateUser,
+    postDeleteUser,
+    postHandleRemoveUser
 };

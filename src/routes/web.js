@@ -6,7 +6,9 @@ const {
     postCreateUser, 
     getCreatePage, 
     getUpdatePage,
-    postUpdateUser
+    postUpdateUser,
+    postDeleteUser,
+    postHandleRemoveUser
 } = require('../controller/homeController');
 
 router.get('/', getHomepage);
@@ -16,4 +18,6 @@ router.get('/edit/:id', getUpdatePage);
 
 router.post('/create-user', postCreateUser);
 router.post('/update-user', postUpdateUser);
+router.post('/delete-user', postHandleRemoveUser);
+router.post('/delete-user/:id', postDeleteUser);
 module.exports = router;

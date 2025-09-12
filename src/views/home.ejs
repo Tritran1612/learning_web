@@ -30,7 +30,10 @@
                     <td><%= users[i].city %></td>
                     <td>
                         <a href="/edit/<%= users[i].id %>">Edit</a>
-                        <button>Delete</button>
+                        <form action="/delete-user" method="post">
+                            <input type="hidden" name="id" value="<%= users[i].id %>">
+                            <button type="submit">Delete</button>
+                        </form>
                     </td>
                 </tr>
             <% } %>

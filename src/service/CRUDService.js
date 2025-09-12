@@ -44,9 +44,21 @@ const createNewUser = async (email, name, city) => {
     }
 };
 
+const deleteUserById = async (id) => {
+    try {
+        await connection.query('DELETE FROM Users WHERE id = ?', [id]);
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        throw error;
+    }
+};
+
+
+
 module.exports = {
     getAllUsers,
     getUserById,
     updateUserById,
-    createNewUser
+    createNewUser,
+    deleteUserById
 }
